@@ -4,7 +4,7 @@ services:
   
   
 before_install:
-  - docker build -t alex3dd/react-test -f ./complexclient/Dockerfile.dev ./complex/client
+  - docker build -t alex3dd/react-test -f ./complex/client/Dockerfile.dev ./complex/client
   
 script:
   - docker run alex3dd/react-test npm test -- --coverage
