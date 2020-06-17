@@ -4,17 +4,17 @@ services:
   
   
 before_install:
-  - docker build -t alex3dd/react-test -f ./client/Dockerfile.dev ./client  
+  - docker build -t alex3dd/react-test -f ./complexclient/Dockerfile.dev ./complex/client
   
 script:
   - docker run alex3dd/react-test npm test -- --coverage
   
   
 after_success:   
-  - docker build -t alex3dd/multi-client ./client  
-  - docker build -t alex3dd/multi-nginx ./nginx
-  - docker build -t alex3dd/multi-server ./server
-  - docker build -t alex3dd/multi-worker ./worker
+  - docker build -t alex3dd/multi-client ./complexclient  
+  - docker build -t alex3dd/multi-nginx ./complexnginx
+  - docker build -t alex3dd/multi-server ./complexserver
+  - docker build -t alex3dd/multi-worker ./complexworker
   # Before push them, log in into a docker cli
   - echo "$DOCKER_PASSWORD"|docker login -u "$DOCKER_ID" --password-stdin 
   # take those images and push them to docker hub
