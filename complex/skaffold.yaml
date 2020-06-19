@@ -4,7 +4,7 @@ build:
   local:
     push: false
   artifacts:
-    - image: alex3dd/multi-client
+    - image: alexgure/multi-client
       context: client
       docker:
         dockerfile: Dockerfile.dev
@@ -12,13 +12,13 @@ build:
         '**/*.js': .
         '**/*.css': .
         '**/*.html': .
-    - image: alex3dd/multi-server
+    - image: alexgure/multi-server
       context: server
       docker:
         dockerfile: Dockerfile.dev
       sync:
         '**/*.js': .
-    - image: alex3dd/multi-worker
+    - image: alexgure/multi-worker
       context: worker
       docker:
         dockerfile: Dockerfile.dev
