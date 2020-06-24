@@ -3,8 +3,37 @@
   "containerDefinitions": [
      {
          "name": "client",
-         "image": 
+         "image": "alexgure/multi-client",
+         "hostname":"client",
+         "essential": false
          
-     } 
+     },
+     {
+         "name": "server",
+         "image": "alexgure/multi-server",
+         "hostname":"api",
+         "essential": false
+         
+     },
+     {
+         "name": "worker",
+         "image": "alexgure/multi-worker",
+         "hostname":"worker",
+         "essential": false
+         
+     },
+     {
+         "name": "nginx",
+         "image": "alexgure/multi-nginx",
+         "hostname":"nginx",
+         "essential": true,
+         "portMappings": [
+          {
+          "hostPort": 80,
+          "containerPort": 80
+          }
+         ],
+         "links":["client", "server"]
+     }
   ]
 }
