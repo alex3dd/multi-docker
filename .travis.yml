@@ -4,17 +4,17 @@ services:
   
   
 before_install:
-  - docker build -t alexgure/react-test -f ./complex/client/Dockerfile.dev ./complex/client
+  - docker build -t alexgure/react-test -f ./client/Dockerfile.dev ./complex/client
   
 script:
   - docker run alexgure/react-test npm test -- --coverage
   
   
 after_success:   
-  - docker build -t alexgure/multi-client ./complex/client  
-  - docker build -t alexgure/multi-nginx ./complex/nginx
-  - docker build -t alexgure/multi-server ./complex/server
-  - docker build -t alexgure/multi-worker ./complex/worker
+  - docker build -t alexgure/multi-client ./client  
+  - docker build -t alexgure/multi-nginx ./nginx
+  - docker build -t alexgure/multi-server ./server
+  - docker build -t alexgure/multi-worker ./worker
   # Before push them, log in into a docker cli
   - echo "$DOCKER_PASSWORD"|docker login -u "$DOCKER_ID" --password-stdin 
   # take those images and push them to docker hub
@@ -22,18 +22,3 @@ after_success:
   - docker push alexgure/multi-nginx 
   - docker push alexgure/multi-server
   - docker push alexgure/multi-worker
-  
-deploy:
-  provider: elasticbeanstalk
-  region: "us-east-1"
-  app: "multi-docker"
-  env: "MultiDocker-env"
-  bucket_name: "elasticbeanstalk-us-east-1-436656112159"
-  bucket_path: "docker-multi"
-  on:
-    branch: master
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key:
-    secure: "$AWS_SECRET_KEY"
-    
-
